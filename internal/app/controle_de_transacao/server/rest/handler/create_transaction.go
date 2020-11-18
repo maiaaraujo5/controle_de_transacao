@@ -1,0 +1,38 @@
+package handler
+
+import (
+	"github.com/labstack/echo/v4"
+	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
+	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service"
+	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/model/request"
+)
+
+type CreateTransaction struct {
+	service service.CreateTransaction
+}
+
+func NewCreateTransaction(service service.CreateTransaction) *CreateTransaction {
+	return &CreateTransaction{service: service}
+}
+
+func (h *CreateTransaction) Handle(c echo.Context) error {
+	context := c.Request().Context()
+
+	req, err := request.NewTransaction(c)
+	if err != nil {
+		return err
+	}
+
+	transaction := &model.Transaction{
+		AccountID:       req.AccountID,
+		OperationTypeID: req.OperationTypeID,
+		Amount:          req.Amount,
+	}
+
+	transaction, err = h.service.Execute(context, transaction)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
