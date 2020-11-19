@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/gommon/log"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/repository"
+	DBModel "github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/provider/postgre/model"
 )
 
 type Account struct {
@@ -17,7 +18,10 @@ func NewAccount(db *pg.DB) repository.Account {
 }
 
 func (a Account) Save(parentContext context.Context, account *model.Account) (*model.Account, error) {
-	_, err := a.db.Model(account).Insert()
+
+	accountDB := new(DBModel.Account).FromDomainModel(account)
+
+	_, err := a.db.WithContext(parentContext).Model(accountDB).Returning("id").Insert()
 	if err != nil {
 		return nil, err
 	}
@@ -26,6 +30,13 @@ func (a Account) Save(parentContext context.Context, account *model.Account) (*m
 }
 
 func (a Account) Find(parentContext context.Context, accountID string) (*model.Account, error) {
+
+	accountDB := new(DBModel.Account)
+	err := a.db.WithContext(parentContext).Model(accountDB).Where("id = ?0", accountID).Select()
+	if err != nil {
+		return nil, err
+	}
+
 	log.Info("found")
-	return nil, nil
+	return accountDB.ToDomainModel(), nil
 }

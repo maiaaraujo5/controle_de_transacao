@@ -23,12 +23,11 @@ func NewCreateAccount(repository repository.Account) CreateAccount {
 
 func (c createAccount) Execute(parentContext context.Context, account *model.Account) (*model.Account, error) {
 
-	log.Info("created account")
-
 	account, err := c.repository.Save(parentContext, account)
 	if err != nil {
 		return nil, err
 	}
 
+	log.Info("created account")
 	return account, nil
 }
