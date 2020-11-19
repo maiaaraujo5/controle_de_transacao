@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service"
+	"net/http"
 )
 
 type RecoverAccount struct {
@@ -20,10 +21,10 @@ func (h *RecoverAccount) Handle(c echo.Context) error {
 
 	accountID := c.Param("accountId")
 
-	_, err := h.service.Execute(context, accountID)
+	account, err := h.service.Execute(context, accountID)
 	if err != nil {
 		return err
 	}
 
-	return nil
+	return c.JSON(http.StatusOK, account)
 }

@@ -3,9 +3,9 @@ package request
 import "github.com/labstack/echo/v4"
 
 type Transaction struct {
-	AccountID       int     `json:"account_id"`
-	OperationTypeID int     `json:"operation_type_id"`
-	Amount          float32 `json:"amount"`
+	AccountID       int     `json:"account_id" validate:"required"`
+	OperationTypeID int     `json:"operation_type_id" validate:"required"`
+	Amount          float32 `json:"amount" validate:"required"`
 }
 
 func NewTransaction(c echo.Context) (*Transaction, error) {

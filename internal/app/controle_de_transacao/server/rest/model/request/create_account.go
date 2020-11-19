@@ -3,7 +3,7 @@ package request
 import "github.com/labstack/echo/v4"
 
 type Account struct {
-	DocumentNumber string `json:"document_number"`
+	DocumentNumber string `json:"document_number" validate:"required"`
 }
 
 func NewAccount(c echo.Context) (*Account, error) {

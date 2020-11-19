@@ -1,18 +1,24 @@
 package handler
 
 import (
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/model/request"
+	"net/http"
 )
 
 type CreateTransaction struct {
-	service service.CreateTransaction
+	service  service.CreateTransaction
+	validate *validator.Validate
 }
 
-func NewCreateTransaction(service service.CreateTransaction) *CreateTransaction {
-	return &CreateTransaction{service: service}
+func NewCreateTransaction(service service.CreateTransaction, validate *validator.Validate) *CreateTransaction {
+	return &CreateTransaction{
+		service:  service,
+		validate: validate,
+	}
 }
 
 func (h *CreateTransaction) Handle(c echo.Context) error {
@@ -34,5 +40,5 @@ func (h *CreateTransaction) Handle(c echo.Context) error {
 		return err
 	}
 
-	return nil
+	return c.JSON(http.StatusCreated, transaction)
 }

@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	fxHandler "github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/fx/module/rest/handler"
@@ -13,6 +14,7 @@ func Module() fx.Option {
 		fxHandler.AccountModule(),
 		fxHandler.TransactionModule(),
 		fx.Provide(
+			validator.New,
 			Routes,
 		),
 	)
