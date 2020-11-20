@@ -2,9 +2,12 @@ package service
 
 import (
 	"context"
+	"errors"
 	"github.com/labstack/gommon/log"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
+	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model/operations_types"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/repository"
+	"math"
 )
 
 type CreateTransaction interface {
@@ -23,12 +26,19 @@ func NewCreateTransaction(repository repository.Transaction) CreateTransaction {
 
 func (c createTransaction) Execute(parentContext context.Context, transaction *model.Transaction) (*model.Transaction, error) {
 
-	log.Info("transaction created")
+	if !operations_types.IsValidOperationType(transaction.OperationTypeID) {
+		return nil, errors.New("the operation type is invalid")
+	}
 
-	transaction, err := c.repository.Save(parentContext, transaction)
+	if transaction.OperationTypeID != operations_types.PAYMENT {
+		transaction.Amount = math.Copysign(transaction.Amount, -1)
+	}
+
+	t, err := c.repository.Save(parentContext, transaction)
 	if err != nil {
 		return nil, err
 	}
 
-	return transaction, nil
+	log.Info("transaction created")
+	return t, nil
 }

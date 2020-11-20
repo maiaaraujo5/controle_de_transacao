@@ -6,6 +6,6 @@ type Transaction struct {
 	ID              int
 	AccountID       int
 	OperationTypeID int
-	Amount          float32
+	Amount          float64
 	EventDate       time.Time
 }

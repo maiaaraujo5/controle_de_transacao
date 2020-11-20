@@ -21,6 +21,7 @@ func TransactionModule() fx.Option {
 		service.TransactionModule(),
 		fx.Provide(
 			handler.NewCreateTransaction,
+			handler.NewRecoverTransaction,
 		),
 	)
 }

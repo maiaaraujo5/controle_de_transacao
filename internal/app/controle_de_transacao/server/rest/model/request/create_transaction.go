@@ -5,7 +5,7 @@ import "github.com/labstack/echo/v4"
 type Transaction struct {
 	AccountID       int     `json:"account_id" validate:"required"`
 	OperationTypeID int     `json:"operation_type_id" validate:"required"`
-	Amount          float32 `json:"amount" validate:"required"`
+	Amount          float64 `json:"amount" validate:"required"`
 }
 
 func NewTransaction(c echo.Context) (*Transaction, error) {

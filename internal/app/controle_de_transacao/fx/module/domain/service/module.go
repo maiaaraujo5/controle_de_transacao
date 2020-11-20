@@ -7,9 +7,14 @@ import (
 	"go.uber.org/fx"
 )
 
-func AccountModule() fx.Option {
+func DefaultModule() fx.Option {
 	return fx.Options(
 		postgres.Module(),
+	)
+}
+
+func AccountModule() fx.Option {
+	return fx.Options(
 		provider.AccountModule(),
 		fx.Provide(
 			service.NewCreateAccount,
@@ -23,6 +28,7 @@ func TransactionModule() fx.Option {
 		provider.TransactionModule(),
 		fx.Provide(
 			service.NewCreateTransaction,
+			service.NewRecoverTransaction,
 		),
 	)
 }

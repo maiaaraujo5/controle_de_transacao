@@ -10,7 +10,7 @@ type Transaction struct {
 	ID              int       `pg:"id"`
 	AccountID       int       `pg:"account_id"`
 	OperationTypeID int       `pg:"operation_type_id"`
-	Amount          float32   `pg:"amount"`
+	Amount          float64   `pg:"amount"`
 	EventDate       time.Time `pg:"event_date"`
 }
 
