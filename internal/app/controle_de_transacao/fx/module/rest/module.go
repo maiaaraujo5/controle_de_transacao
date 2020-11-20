@@ -27,7 +27,7 @@ func Routes(createAccount *handler.CreateAccount, recoverAccount *handler.Recove
 	e.Use(middleware.Logger())
 
 	e.POST("/accounts", createAccount.Handle)
-	e.GET("/accounts", recoverAccount.Handle, middleware.JWT([]byte("key-segura")))
+	e.GET("/accounts/:accountId", recoverAccount.Handle, middleware.JWT([]byte("key-segura")))
 	e.POST("/transactions", createTransaction.Handle, middleware.JWT([]byte("key-segura")))
 	return e
 }

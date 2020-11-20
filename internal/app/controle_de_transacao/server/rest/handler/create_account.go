@@ -6,6 +6,7 @@ import (
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/model/request"
+	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/model/response"
 	"net/http"
 )
 
@@ -28,7 +29,7 @@ func (h *CreateAccount) Handle(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, nil)
 	}
 
-	err = c.Validate(req)
+	err = h.validate.Struct(req)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, nil)
 	}
@@ -42,5 +43,7 @@ func (h *CreateAccount) Handle(c echo.Context) error {
 		return err
 	}
 
-	return c.JSON(http.StatusCreated, account)
+	resp := new(response.Account).FromModelDomain(account)
+
+	return c.JSON(http.StatusCreated, resp)
 }

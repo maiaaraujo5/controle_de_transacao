@@ -6,6 +6,7 @@ import (
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/model/request"
+	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/model/response"
 	"net/http"
 )
 
@@ -29,6 +30,11 @@ func (h *CreateTransaction) Handle(c echo.Context) error {
 		return err
 	}
 
+	err = h.validate.Struct(req)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, nil)
+	}
+
 	transaction := &model.Transaction{
 		AccountID:       req.AccountID,
 		OperationTypeID: req.OperationTypeID,
@@ -40,5 +46,7 @@ func (h *CreateTransaction) Handle(c echo.Context) error {
 		return err
 	}
 
-	return c.JSON(http.StatusCreated, transaction)
+	resp := new(response.Transaction).FromModelDomain(transaction)
+
+	return c.JSON(http.StatusCreated, resp)
 }

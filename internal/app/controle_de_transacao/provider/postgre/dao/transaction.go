@@ -21,13 +21,13 @@ func (t Transaction) Save(parentContext context.Context, transaction *model.Tran
 
 	transactionDB := new(DBModel.Transaction).FromModelDomain(transaction)
 
-	_, err := t.db.WithContext(parentContext).Model(transactionDB).Insert()
+	_, err := t.db.WithContext(parentContext).Model(transactionDB).Returning("id").Insert()
 	if err != nil {
 		return nil, err
 	}
 
 	log.Info("saved")
-	return transaction, nil
+	return transactionDB.ToModelDomain(), nil
 }
 
 func (t Transaction) Find(parentContext context.Context, transactionID string) (*model.Transaction, error) {

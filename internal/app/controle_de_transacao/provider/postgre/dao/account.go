@@ -25,8 +25,9 @@ func (a Account) Save(parentContext context.Context, account *model.Account) (*m
 	if err != nil {
 		return nil, err
 	}
+
 	log.Info("saved")
-	return account, nil
+	return accountDB.ToDomainModel(), nil
 }
 
 func (a Account) Find(parentContext context.Context, accountID string) (*model.Account, error) {

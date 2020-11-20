@@ -18,13 +18,16 @@ func (t *Transaction) FromModelDomain(transaction *model.Transaction) *Transacti
 	t.AccountID = transaction.AccountID
 	t.Amount = transaction.Amount
 	t.OperationTypeID = transaction.OperationTypeID
+	t.EventDate = time.Now()
 	return t
 }
 
 func (t *Transaction) ToModelDomain() *model.Transaction {
 	return &model.Transaction{
+		ID:              t.ID,
 		AccountID:       t.AccountID,
 		OperationTypeID: t.OperationTypeID,
 		Amount:          t.Amount,
+		EventDate:       t.EventDate,
 	}
 }
