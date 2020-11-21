@@ -24,7 +24,7 @@ func (h *RecoverAccount) Handle(c echo.Context) error {
 
 	account, err := h.service.Execute(context, accountID)
 	if err != nil {
-		return err
+		return c.JSON(http.StatusInternalServerError, err)
 	}
 
 	resp := new(response.Account).FromModelDomain(account)

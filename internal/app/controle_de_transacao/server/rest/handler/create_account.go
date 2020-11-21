@@ -40,7 +40,7 @@ func (h *CreateAccount) Handle(c echo.Context) error {
 
 	account, err = h.service.Execute(context, account)
 	if err != nil {
-		return err
+		return c.JSON(http.StatusInternalServerError, nil)
 	}
 
 	resp := new(response.Account).FromModelDomain(account)

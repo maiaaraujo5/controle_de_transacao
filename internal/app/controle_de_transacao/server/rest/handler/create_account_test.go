@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
@@ -99,6 +100,21 @@ func (s *CreateAccountSuite) TestCreateAccount_Handle() {
 			},
 		},
 		{
+			name: "should return bad request when body is malformed",
+			fields: fields{
+				service:  new(mocks.CreateAccount),
+				validate: validator.New(),
+			},
+			args: args{
+				body: strings.NewReader(`{document_number: "123"}`),
+			},
+			wantErr:            false,
+			wantHttpStatusCode: http.StatusInternalServerError,
+			mock: func(service *mocks.CreateAccount) {
+				service.On("Execute", mock.Anything, mock.Anything).Return(nil, nil).Maybe()
+			},
+		},
+		{
 			name: "should return bad request when body don't have document_number",
 			fields: fields{
 				service:  new(mocks.CreateAccount),
@@ -111,6 +127,21 @@ func (s *CreateAccountSuite) TestCreateAccount_Handle() {
 			wantHttpStatusCode: http.StatusBadRequest,
 			mock: func(service *mocks.CreateAccount) {
 				service.On("Execute", mock.Anything, mock.Anything).Return(nil, nil).Maybe()
+			},
+		},
+		{
+			name: "should return internal server error when service return error",
+			fields: fields{
+				service:  new(mocks.CreateAccount),
+				validate: validator.New(),
+			},
+			args: args{
+				body: strings.NewReader(`{"document_number": "12345689"}`),
+			},
+			wantErr:            false,
+			wantHttpStatusCode: http.StatusInternalServerError,
+			mock: func(service *mocks.CreateAccount) {
+				service.On("Execute", mock.Anything, mock.Anything).Return(nil, errors.New("error to recover account")).Once()
 			},
 		},
 	}

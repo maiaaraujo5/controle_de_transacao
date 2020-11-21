@@ -23,7 +23,7 @@ func (h *RecoverTransaction) Handle(c echo.Context) error {
 
 	transaction, err := h.service.Execute(context, transactionID)
 	if err != nil {
-		return err
+		return c.JSON(http.StatusInternalServerError, nil)
 	}
 
 	resp := new(response.Transaction).FromModelDomain(transaction)

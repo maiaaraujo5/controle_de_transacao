@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="131f8a60-b17e-4df8-b325-85fd471aca53" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/domain/model/constants/operations_types.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/domain/service/recover_transaction.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/server/rest/handler/recover_transaction.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/app/controle_de_transacao/domain/model/transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/domain/model/transaction.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/app/controle_de_transacao/domain/service/create_transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/domain/service/create_transaction.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/app/controle_de_transacao/fx/module/domain/service/module.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/fx/module/domain/service/module.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/app/controle_de_transacao/fx/module/rest/handler/module.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/fx/module/rest/handler/module.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/app/controle_de_transacao/fx/module/rest/module.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/fx/module/rest/module.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/app/controle_de_transacao/provider/postgre/model/transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/provider/postgre/model/transaction.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/app/controle_de_transacao/server/rest/model/request/create_transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/server/rest/model/request/create_transaction.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/app/controle_de_transacao/server/rest/model/response/transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/controle_de_transacao/server/rest/model/response/transaction.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1kOShshGuqAPTs9wQpyGfIoU0Pd" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="go.vendoring.notification.had.been.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../bitbucket.org/mydoctorapp/media.persister" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/app/controle_de_transacao/domain/model/const" />
+      <recent name="$PROJECT_DIR$/app" />
+      <recent name="$PROJECT_DIR$/internal/rest/handler/transactions/create" />
+      <recent name="$PROJECT_DIR$/internal/rest/handler/accounts/create/model/request" />
+      <recent name="$PROJECT_DIR$/internal/rest/handler/accounts/recover" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="go build github.com/maiaaraujo5/controle_de_transacao/cmd" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="controle_de_transacao" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/cmd/main.go" />
+      <package value="github.com/maiaaraujo5/controle_de_transacao/cmd" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build github.com/maiaaraujo5/controle_de_transacao/cmd" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat:create method in responses to get information from domain models, add postgres module to fx to inject the dependency in providers, add route param in route get accounts, change the return of handlers to response, add ID and EventDate in domain model transaction" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:create method in responses to get information from domain models, add postgres module to fx to inject the dependency in providers, add route param in route get accounts, change the return of handlers to response, add ID and EventDate in domain model transaction" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1569" y="390" width="400" height="334" key="#Go_Modules" timestamp="1605571737000">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state x="1569" y="390" width="400" height="334" key="#Go_Modules/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605571737000" />
+    <state x="2079" y="290" width="624" height="533" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1605570965417">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state x="2079" y="290" width="624" height="533" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605570965417" />
+    <state x="2154" y="298" key="#xdebugger.evaluate" timestamp="1605911366615">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state x="2154" y="298" key="#xdebugger.evaluate/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605911366615" />
+    <state x="2179" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1605577276708">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state x="2179" y="311" width="424" height="491" key="FileChooserDialogImpl/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605577276708" />
+    <state width="2442" height="340" key="GridCell.Tab.0.bottom" timestamp="1605911528498">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state width="1034" height="275" key="GridCell.Tab.0.bottom/1080.0.2560.1080/0.27.1080.1893@0.27.1080.1893" timestamp="1605887413643" />
+    <state width="2442" height="340" key="GridCell.Tab.0.bottom/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605911528498" />
+    <state width="2442" height="340" key="GridCell.Tab.0.center" timestamp="1605911528498">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state width="1034" height="275" key="GridCell.Tab.0.center/1080.0.2560.1080/0.27.1080.1893@0.27.1080.1893" timestamp="1605887413643" />
+    <state width="2442" height="340" key="GridCell.Tab.0.center/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605911528498" />
+    <state width="2442" height="340" key="GridCell.Tab.0.left" timestamp="1605911528498">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state width="1034" height="275" key="GridCell.Tab.0.left/1080.0.2560.1080/0.27.1080.1893@0.27.1080.1893" timestamp="1605887413643" />
+    <state width="2442" height="340" key="GridCell.Tab.0.left/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605911528498" />
+    <state width="2442" height="340" key="GridCell.Tab.0.right" timestamp="1605911528498">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state width="1034" height="275" key="GridCell.Tab.0.right/1080.0.2560.1080/0.27.1080.1893@0.27.1080.1893" timestamp="1605887413643" />
+    <state width="2442" height="340" key="GridCell.Tab.0.right/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605911528498" />
+    <state width="2442" height="340" key="GridCell.Tab.1.bottom" timestamp="1605911531000">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state width="2442" height="340" key="GridCell.Tab.1.bottom/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605911531000" />
+    <state width="2442" height="340" key="GridCell.Tab.1.center" timestamp="1605911531000">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state width="2442" height="340" key="GridCell.Tab.1.center/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605911531000" />
+    <state width="2442" height="340" key="GridCell.Tab.1.left" timestamp="1605911531000">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state width="2442" height="340" key="GridCell.Tab.1.left/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605911531000" />
+    <state width="2442" height="340" key="GridCell.Tab.1.right" timestamp="1605911531000">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state width="2442" height="340" key="GridCell.Tab.1.right/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605911531000" />
+    <state x="1991" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1605891269980">
+      <screen x="1080" y="0" width="2560" height="1080" />
+    </state>
+    <state x="1991" y="289" width="800" height="535" key="Vcs.Push.Dialog.v2/1080.0.2560.1080/0.27.1080.1893@1080.0.2560.1080" timestamp="1605891269980" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/app/controle_de_transacao/domain/service/create_transaction.go</url>
+          <line>27</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

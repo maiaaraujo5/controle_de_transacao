@@ -27,7 +27,7 @@ func (h *CreateTransaction) Handle(c echo.Context) error {
 
 	req, err := request.NewTransaction(c)
 	if err != nil {
-		return err
+		return c.JSON(http.StatusBadRequest, nil)
 	}
 
 	err = h.validate.Struct(req)
@@ -43,7 +43,7 @@ func (h *CreateTransaction) Handle(c echo.Context) error {
 
 	transaction, err = h.service.Execute(context, transaction)
 	if err != nil {
-		return err
+		return c.JSON(http.StatusInternalServerError, nil)
 	}
 
 	resp := new(response.Transaction).FromModelDomain(transaction)
