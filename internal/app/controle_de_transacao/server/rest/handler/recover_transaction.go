@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service"
+	restErrors "github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/errors"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/model/response"
 	"net/http"
 )
@@ -23,7 +24,7 @@ func (h *RecoverTransaction) Handle(c echo.Context) error {
 
 	transaction, err := h.service.Execute(context, transactionID)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, nil)
+		return restErrors.ToErrorResponse(c, err)
 	}
 
 	resp := new(response.Transaction).FromModelDomain(transaction)

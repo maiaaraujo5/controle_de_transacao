@@ -5,6 +5,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service"
+	restErrors "github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/errors"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/model/request"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/server/rest/model/response"
 	"net/http"
@@ -43,7 +44,7 @@ func (h *CreateTransaction) Handle(c echo.Context) error {
 
 	transaction, err = h.service.Execute(context, transaction)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, nil)
+		return restErrors.ToErrorResponse(c, err)
 	}
 
 	resp := new(response.Transaction).FromModelDomain(transaction)

@@ -37,6 +37,29 @@ func (_m *Account) Find(parentContext context.Context, accountID string) (*model
 	return r0, r1
 }
 
+// FindByDocumentNumber provides a mock function with given fields: parentContext, documentNumber
+func (_m *Account) FindByDocumentNumber(parentContext context.Context, documentNumber string) (*model.Account, error) {
+	ret := _m.Called(parentContext, documentNumber)
+
+	var r0 *model.Account
+	if rf, ok := ret.Get(0).(func(context.Context, string) *model.Account); ok {
+		r0 = rf(parentContext, documentNumber)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*model.Account)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {
+		r1 = rf(parentContext, documentNumber)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // Save provides a mock function with given fields: parentContext, account
 func (_m *Account) Save(parentContext context.Context, account *model.Account) (*model.Account, error) {
 	ret := _m.Called(parentContext, account)

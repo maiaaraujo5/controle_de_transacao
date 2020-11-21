@@ -30,10 +30,12 @@ func (s *CreateTransactionSuite) SetupSuite() {
 }
 
 func (s *CreateTransactionSuite) TestNewCreateTransaction() {
-	repo := new(mocks.Transaction)
+	transaction := new(mocks.Transaction)
+	account := new(mocks.Account)
 
 	type args struct {
-		repository repository.Transaction
+		transactionRepository repository.Transaction
+		accountRepository     repository.Account
 	}
 	tests := []struct {
 		name string
@@ -43,17 +45,19 @@ func (s *CreateTransactionSuite) TestNewCreateTransaction() {
 		{
 			name: "should success build NewCreateTransaction",
 			args: args{
-				repository: repo,
+				transactionRepository: transaction,
+				accountRepository:     account,
 			},
 			want: &createTransaction{
-				repository: repo,
+				transactionRepository: transaction,
+				accountRepository:     account,
 			},
 		},
 	}
 	for _, tt := range tests {
 
 		s.Run(tt.name, func() {
-			got := NewCreateTransaction(tt.args.repository)
+			got := NewCreateTransaction(tt.args.transactionRepository, tt.args.accountRepository)
 			s.Assert().True(reflect.DeepEqual(got, tt.want), "NewCreateTransaction() = %v, want %v", got, tt.want)
 		})
 	}
@@ -61,7 +65,8 @@ func (s *CreateTransactionSuite) TestNewCreateTransaction() {
 
 func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 	type fields struct {
-		repository *mocks.Transaction
+		transaction *mocks.Transaction
+		account     *mocks.Account
 	}
 	type args struct {
 		parentContext context.Context
@@ -73,12 +78,13 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 		args    args
 		want    *model.Transaction
 		wantErr bool
-		mock    func(transaction *mocks.Transaction)
+		mock    func(transaction *mocks.Transaction, account *mocks.Account)
 	}{
 		{
 			name: "should success save a new transaction with operationTypeId cash purchase ",
 			fields: fields{
-				repository: new(mocks.Transaction),
+				transaction: new(mocks.Transaction),
+				account:     new(mocks.Account),
 			},
 			args: args{
 				parentContext: context.Background(),
@@ -96,7 +102,12 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 				EventDate:       time.Now(),
 			},
 			wantErr: false,
-			mock: func(transaction *mocks.Transaction) {
+			mock: func(transaction *mocks.Transaction, account *mocks.Account) {
+				account.On("Find", mock.Anything, mock.Anything).Return(&model.Account{
+					AccountID:      10,
+					DocumentNumber: mock.Anything,
+				}, nil).Once()
+
 				transaction.On("Save", mock.Anything, mock.Anything).Return(&model.Transaction{
 					ID:              1,
 					AccountID:       1,
@@ -109,7 +120,8 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 		{
 			name: "should success save a new transaction with operationTypeId installment_purchase ",
 			fields: fields{
-				repository: new(mocks.Transaction),
+				transaction: new(mocks.Transaction),
+				account:     new(mocks.Account),
 			},
 			args: args{
 				parentContext: context.Background(),
@@ -127,7 +139,12 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 				EventDate:       time.Now(),
 			},
 			wantErr: false,
-			mock: func(transaction *mocks.Transaction) {
+			mock: func(transaction *mocks.Transaction, account *mocks.Account) {
+				account.On("Find", mock.Anything, mock.Anything).Return(&model.Account{
+					AccountID:      10,
+					DocumentNumber: mock.Anything,
+				}, nil).Once()
+
 				transaction.On("Save", mock.Anything, mock.Anything).Return(&model.Transaction{
 					ID:              1,
 					AccountID:       1,
@@ -140,7 +157,8 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 		{
 			name: "should success save a new transaction with operationTypeId withdraw",
 			fields: fields{
-				repository: new(mocks.Transaction),
+				transaction: new(mocks.Transaction),
+				account:     new(mocks.Account),
 			},
 			args: args{
 				parentContext: context.Background(),
@@ -158,7 +176,13 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 				EventDate:       time.Now(),
 			},
 			wantErr: false,
-			mock: func(transaction *mocks.Transaction) {
+			mock: func(transaction *mocks.Transaction, account *mocks.Account) {
+
+				account.On("Find", mock.Anything, mock.Anything).Return(&model.Account{
+					AccountID:      10,
+					DocumentNumber: mock.Anything,
+				}, nil).Once()
+
 				transaction.On("Save", mock.Anything, mock.Anything).Return(&model.Transaction{
 					ID:              1,
 					AccountID:       1,
@@ -171,7 +195,8 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 		{
 			name: "should success save a new transaction with operationTypeId payment",
 			fields: fields{
-				repository: new(mocks.Transaction),
+				transaction: new(mocks.Transaction),
+				account:     new(mocks.Account),
 			},
 			args: args{
 				parentContext: context.Background(),
@@ -189,7 +214,13 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 				EventDate:       time.Now(),
 			},
 			wantErr: false,
-			mock: func(transaction *mocks.Transaction) {
+			mock: func(transaction *mocks.Transaction, account *mocks.Account) {
+
+				account.On("Find", mock.Anything, mock.Anything).Return(&model.Account{
+					AccountID:      10,
+					DocumentNumber: mock.Anything,
+				}, nil).Once()
+
 				transaction.On("Save", mock.Anything, mock.Anything).Return(&model.Transaction{
 					ID:              1,
 					AccountID:       1,
@@ -200,9 +231,10 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 			},
 		},
 		{
-			name: "should return error when repository return error",
+			name: "should return error when transaction repository return error",
 			fields: fields{
-				repository: new(mocks.Transaction),
+				transaction: new(mocks.Transaction),
+				account:     new(mocks.Account),
 			},
 			args: args{
 				parentContext: context.Background(),
@@ -214,14 +246,21 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 			},
 			want:    nil,
 			wantErr: true,
-			mock: func(transaction *mocks.Transaction) {
+			mock: func(transaction *mocks.Transaction, account *mocks.Account) {
+
+				account.On("Find", mock.Anything, mock.Anything).Return(&model.Account{
+					AccountID:      10,
+					DocumentNumber: mock.Anything,
+				}, nil).Once()
+
 				transaction.On("Save", mock.Anything, mock.Anything).Return(nil, errors.New("error to save transaction")).Once()
 			},
 		},
 		{
 			name: "should return error when operation type is invalid",
 			fields: fields{
-				repository: new(mocks.Transaction),
+				transaction: new(mocks.Transaction),
+				account:     new(mocks.Account),
 			},
 			args: args{
 				parentContext: context.Background(),
@@ -233,7 +272,29 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 			},
 			want:    nil,
 			wantErr: true,
-			mock: func(transaction *mocks.Transaction) {
+			mock: func(transaction *mocks.Transaction, account *mocks.Account) {
+				account.On("Find", mock.Anything, mock.Anything).Maybe()
+				transaction.On("Save", mock.Anything, mock.Anything).Maybe()
+			},
+		},
+		{
+			name: "should return error when find account repository return error",
+			fields: fields{
+				transaction: new(mocks.Transaction),
+				account:     new(mocks.Account),
+			},
+			args: args{
+				parentContext: context.Background(),
+				transaction: &model.Transaction{
+					AccountID:       1,
+					OperationTypeID: 1,
+					Amount:          100,
+				},
+			},
+			want:    nil,
+			wantErr: true,
+			mock: func(transaction *mocks.Transaction, account *mocks.Account) {
+				account.On("Find", mock.Anything, mock.Anything).Return(nil, errors.New("error to find account")).Once()
 				transaction.On("Save", mock.Anything, mock.Anything).Maybe()
 			},
 		},
@@ -241,17 +302,19 @@ func (s *CreateTransactionSuite) Test_createTransaction_Execute() {
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
 
-			tt.mock(tt.fields.repository)
+			tt.mock(tt.fields.transaction, tt.fields.account)
 
 			c := createTransaction{
-				repository: tt.fields.repository,
+				accountRepository:     tt.fields.account,
+				transactionRepository: tt.fields.transaction,
 			}
 			got, err := c.Execute(tt.args.parentContext, tt.args.transaction)
 
 			s.Assert().True((err != nil) == tt.wantErr, "Execute() error = %v, wantErr %v")
 			s.Assert().True(reflect.DeepEqual(got, tt.want), "Execute() = %v, want %v", got, tt.want)
 
-			tt.fields.repository.AssertExpectations(s.T())
+			tt.fields.account.AssertExpectations(s.T())
+			tt.fields.transaction.AssertExpectations(s.T())
 		})
 	}
 }

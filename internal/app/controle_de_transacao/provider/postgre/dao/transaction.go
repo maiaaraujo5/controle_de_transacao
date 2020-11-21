@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/gommon/log"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/repository"
+	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/errors"
 	DBModel "github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/provider/postgre/model"
 )
 
@@ -37,6 +38,9 @@ func (t Transaction) Find(parentContext context.Context, transactionID string) (
 	err := t.db.WithContext(parentContext).Model(transactionDB).Where("id = ?0", transactionID).Select()
 
 	if err != nil {
+		if err == pg.ErrNoRows {
+			return nil, errors.NotFound("the transaction not exists")
+		}
 		return nil, err
 	}
 

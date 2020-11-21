@@ -8,4 +8,5 @@ import (
 type Account interface {
 	Save(parentContext context.Context, account *model.Account) (*model.Account, error)
 	Find(parentContext context.Context, accountID string) (*model.Account, error)
+	FindByDocumentNumber(parentContext context.Context, documentNumber string) (*model.Account, error)
 }

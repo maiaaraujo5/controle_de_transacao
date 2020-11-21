@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/gommon/log"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/repository"
+	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/errors"
 	DBModel "github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/provider/postgre/model"
 )
 
@@ -35,9 +36,26 @@ func (a Account) Find(parentContext context.Context, accountID string) (*model.A
 	accountDB := new(DBModel.Account)
 	err := a.db.WithContext(parentContext).Model(accountDB).Where("id = ?0", accountID).Select()
 	if err != nil {
+		if err == pg.ErrNoRows {
+			return nil, errors.NotFound("the account was not found")
+		}
 		return nil, err
 	}
 
-	log.Info("found")
+	log.Info("account found")
+	return accountDB.ToDomainModel(), nil
+}
+
+func (a Account) FindByDocumentNumber(parentContext context.Context, documentNumber string) (*model.Account, error) {
+	accountDB := new(DBModel.Account)
+	err := a.db.WithContext(parentContext).Model(accountDB).Where("document_number = ?0", documentNumber).Select()
+	if err != nil {
+		if err == pg.ErrNoRows {
+			return nil, errors.NotFound("the account was not found")
+		}
+		return nil, err
+	}
+
+	log.Info("account found")
 	return accountDB.ToDomainModel(), nil
 }

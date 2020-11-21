@@ -2,12 +2,13 @@ package service
 
 import (
 	"context"
-	"errors"
 	"github.com/labstack/gommon/log"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model/operations_types"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/repository"
+	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/errors"
 	"math"
+	"strconv"
 )
 
 type CreateTransaction interface {
@@ -15,26 +16,33 @@ type CreateTransaction interface {
 }
 
 type createTransaction struct {
-	repository repository.Transaction
+	transactionRepository repository.Transaction
+	accountRepository     repository.Account
 }
 
-func NewCreateTransaction(repository repository.Transaction) CreateTransaction {
+func NewCreateTransaction(transactionRepository repository.Transaction, accountRepository repository.Account) CreateTransaction {
 	return &createTransaction{
-		repository: repository,
+		transactionRepository: transactionRepository,
+		accountRepository:     accountRepository,
 	}
 }
 
 func (c createTransaction) Execute(parentContext context.Context, transaction *model.Transaction) (*model.Transaction, error) {
 
 	if !operations_types.IsValidOperationType(transaction.OperationTypeID) {
-		return nil, errors.New("the operation type is invalid")
+		return nil, errors.BadRequest("the operation type is invalid")
+	}
+
+	_, err := c.accountRepository.Find(parentContext, strconv.Itoa(transaction.AccountID))
+	if err != nil {
+		return nil, err
 	}
 
 	if transaction.OperationTypeID != operations_types.PAYMENT {
 		transaction.Amount = math.Copysign(transaction.Amount, -1)
 	}
 
-	t, err := c.repository.Save(parentContext, transaction)
+	t, err := c.transactionRepository.Save(parentContext, transaction)
 	if err != nil {
 		return nil, err
 	}

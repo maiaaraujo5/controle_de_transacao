@@ -7,6 +7,7 @@ import (
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service/mocks"
+	errors2 "github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/errors"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 	"io"
@@ -109,7 +110,7 @@ func (s *CreateAccountSuite) TestCreateAccount_Handle() {
 				body: strings.NewReader(`{document_number: "123"}`),
 			},
 			wantErr:            false,
-			wantHttpStatusCode: http.StatusInternalServerError,
+			wantHttpStatusCode: http.StatusBadRequest,
 			mock: func(service *mocks.CreateAccount) {
 				service.On("Execute", mock.Anything, mock.Anything).Return(nil, nil).Maybe()
 			},
@@ -130,7 +131,7 @@ func (s *CreateAccountSuite) TestCreateAccount_Handle() {
 			},
 		},
 		{
-			name: "should return internal server error when service return error",
+			name: "should return internal server error when service one unmapped error",
 			fields: fields{
 				service:  new(mocks.CreateAccount),
 				validate: validator.New(),
@@ -142,6 +143,21 @@ func (s *CreateAccountSuite) TestCreateAccount_Handle() {
 			wantHttpStatusCode: http.StatusInternalServerError,
 			mock: func(service *mocks.CreateAccount) {
 				service.On("Execute", mock.Anything, mock.Anything).Return(nil, errors.New("error to recover account")).Once()
+			},
+		},
+		{
+			name: "should return conflict when service return already exists error",
+			fields: fields{
+				service:  new(mocks.CreateAccount),
+				validate: validator.New(),
+			},
+			args: args{
+				body: strings.NewReader(`{"document_number": "12345689"}`),
+			},
+			wantErr:            false,
+			wantHttpStatusCode: http.StatusConflict,
+			mock: func(service *mocks.CreateAccount) {
+				service.On("Execute", mock.Anything, mock.Anything).Return(nil, errors2.AlreadyExists("already exists"))
 			},
 		},
 	}
