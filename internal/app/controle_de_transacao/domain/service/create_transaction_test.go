@@ -45,7 +45,7 @@ func (s *CreateTransactionSuite) TestNewCreateTransaction() {
 			args: args{
 				repository: repo,
 			},
-			want: createTransaction{
+			want: &createTransaction{
 				repository: repo,
 			},
 		},
