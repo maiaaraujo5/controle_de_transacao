@@ -19,7 +19,7 @@ type createTransaction struct {
 }
 
 func NewCreateTransaction(repository repository.Transaction) CreateTransaction {
-	return createTransaction{
+	return &createTransaction{
 		repository: repository,
 	}
 }

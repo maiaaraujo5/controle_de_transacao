@@ -16,7 +16,7 @@ type createAccount struct {
 }
 
 func NewCreateAccount(repository repository.Account) CreateAccount {
-	return createAccount{
+	return &createAccount{
 		repository: repository,
 	}
 }

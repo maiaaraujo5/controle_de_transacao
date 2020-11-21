@@ -15,7 +15,7 @@ type recoverAccount struct {
 }
 
 func NewRecoverAccount(repository repository.Account) RecoverAccount {
-	return recoverAccount{
+	return &recoverAccount{
 		repository: repository,
 	}
 }

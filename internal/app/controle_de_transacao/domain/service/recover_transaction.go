@@ -15,7 +15,9 @@ type recoverTransaction struct {
 }
 
 func NewRecoverTransaction(repository repository.Transaction) RecoverTransaction {
-	return &recoverTransaction{repository: repository}
+	return &recoverTransaction{
+		repository: repository,
+	}
 }
 
 func (r *recoverTransaction) Execute(parentContext context.Context, transactionID string) (*model.Transaction, error) {
