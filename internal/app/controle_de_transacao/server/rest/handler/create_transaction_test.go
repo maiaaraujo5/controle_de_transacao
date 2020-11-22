@@ -7,6 +7,7 @@ import (
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/service/mocks"
+	errors2 "github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/errors"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 	"io"
@@ -158,7 +159,7 @@ func (s *CreateTransactionSuite) TestCreateTransaction_Handle() {
 			},
 		},
 		{
-			name: "should return internal server error when service return error",
+			name: "should return internal server error when service return unmapped error",
 			fields: fields{
 				service:  new(mocks.CreateTransaction),
 				validate: validator.New(),
@@ -169,6 +170,34 @@ func (s *CreateTransactionSuite) TestCreateTransaction_Handle() {
 			wantHttpStatusCode: http.StatusInternalServerError,
 			mock: func(service *mocks.CreateTransaction) {
 				service.On("Execute", mock.Anything, mock.Anything).Return(nil, errors.New("error to create new transaction"))
+			},
+		},
+		{
+			name: "should return bad request when service return bad request error",
+			fields: fields{
+				service:  new(mocks.CreateTransaction),
+				validate: validator.New(),
+			},
+			args: args{
+				body: strings.NewReader(`{"account_id":1, "operation_type_id":1, "amount":128.50}`),
+			},
+			wantHttpStatusCode: http.StatusBadRequest,
+			mock: func(service *mocks.CreateTransaction) {
+				service.On("Execute", mock.Anything, mock.Anything).Return(nil, errors2.BadRequest("bad request"))
+			},
+		},
+		{
+			name: "should return not found when service return not found error",
+			fields: fields{
+				service:  new(mocks.CreateTransaction),
+				validate: validator.New(),
+			},
+			args: args{
+				body: strings.NewReader(`{"account_id":1, "operation_type_id":1, "amount":128.50}`),
+			},
+			wantHttpStatusCode: http.StatusNotFound,
+			mock: func(service *mocks.CreateTransaction) {
+				service.On("Execute", mock.Anything, mock.Anything).Return(nil, errors2.NotFound("not found"))
 			},
 		},
 	}
