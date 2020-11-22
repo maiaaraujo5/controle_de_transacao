@@ -6,6 +6,7 @@ import (
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/model"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/repository"
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/domain/repository/mocks"
+	errors2 "github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/errors"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 	"reflect"
@@ -83,6 +84,8 @@ func (s *CreateAccountSuite) Test_createAccount_Execute() {
 			},
 			wantErr: false,
 			mock: func(repository *mocks.Account) {
+				repository.On("FindByDocumentNumber", mock.Anything, mock.Anything).Return(nil, errors2.NotFound("not found"))
+
 				repository.On("Save", mock.Anything, mock.Anything).Return(&model.Account{
 					AccountID:      1,
 					DocumentNumber: mock.Anything,
@@ -90,7 +93,7 @@ func (s *CreateAccountSuite) Test_createAccount_Execute() {
 			},
 		},
 		{
-			name: "should return error when repository return error",
+			name: "should return error when save repository return error",
 			fields: fields{
 				repository: new(mocks.Account),
 			},
@@ -103,7 +106,49 @@ func (s *CreateAccountSuite) Test_createAccount_Execute() {
 			want:    nil,
 			wantErr: true,
 			mock: func(repository *mocks.Account) {
+				repository.On("FindByDocumentNumber", mock.Anything, mock.Anything).Return(nil, errors2.NotFound("not found"))
 				repository.On("Save", mock.Anything, mock.Anything).Return(nil, errors.New("error to save new account")).Once()
+			},
+		},
+		{
+			name: "should return error when one account was found",
+			fields: fields{
+				repository: new(mocks.Account),
+			},
+			args: args{
+				parentContext: context.Background(),
+				account: &model.Account{
+					DocumentNumber: mock.Anything,
+				},
+			},
+			want:    nil,
+			wantErr: true,
+			mock: func(repository *mocks.Account) {
+				repository.On("FindByDocumentNumber", mock.Anything, mock.Anything).Return(&model.Account{
+					AccountID:      1,
+					DocumentNumber: mock.Anything,
+				}, nil)
+
+				repository.On("Save", mock.Anything, mock.Anything).Maybe()
+			},
+		},
+		{
+			name: "should return error when findByDocumentNumber return error different from not found",
+			fields: fields{
+				repository: new(mocks.Account),
+			},
+			args: args{
+				parentContext: context.Background(),
+				account: &model.Account{
+					DocumentNumber: mock.Anything,
+				},
+			},
+			want:    nil,
+			wantErr: true,
+			mock: func(repository *mocks.Account) {
+				repository.On("FindByDocumentNumber", mock.Anything, mock.Anything).Return(nil, errors.New("error to find account"))
+
+				repository.On("Save", mock.Anything, mock.Anything).Maybe()
 			},
 		},
 	}
