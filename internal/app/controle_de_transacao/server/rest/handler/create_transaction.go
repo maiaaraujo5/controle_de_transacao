@@ -28,12 +28,12 @@ func (h *CreateTransaction) Handle(c echo.Context) error {
 
 	req, err := request.NewTransaction(c)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, nil)
+		return restErrors.NewErrorResponse(c, http.StatusBadRequest, "bad request")
 	}
 
 	err = h.validate.Struct(req)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, nil)
+		return restErrors.NewErrorResponse(c, http.StatusBadRequest, "bad request")
 	}
 
 	transaction := &model.Transaction{
