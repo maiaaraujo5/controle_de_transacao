@@ -7,38 +7,33 @@ host: localhost:8080
 basePath: /
 securityDefinitions: {}
 schemes:
-- http
+  - http
 consumes:
-- application/json
+  - application/json
 produces:
-- application/json
+  - application/json
 paths:
   /accounts:
     post:
       summary: Create Account
       tags:
-      - Accounts
+        - Accounts
       operationId: CreateAccount
       deprecated: false
       produces:
-      - application/json
+        - application/json
       parameters:
-      - name: Authorization
-        in: header
-        required: false
-        default: Bearer {token}
-        type: string
-      - name: Body
-        in: body
-        required: true
-        description: ''
-        schema:
-          $ref: '#/definitions/CreateAccountRequest'
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/CreateAccountRequest'
       responses:
         201:
           description: 'successful operation'
-          schema: 
-             $ref: '#/definitions/AccountResponse'
+          schema:
+            $ref: '#/definitions/AccountResponse'
           headers: {}
         400:
           description: 'bad request'
@@ -48,7 +43,7 @@ paths:
           description: 'conflict'
           schema:
             $ref: '#/definitions/ConflictResponse'
-        
+
         500:
           description: 'internal server error'
           schema:
@@ -57,33 +52,33 @@ paths:
     get:
       summary: Recover Account
       tags:
-      - Accounts
+        - Accounts
       operationId: RecoverAccount
       deprecated: false
       produces:
-      - application/json
+        - application/json
       parameters:
-      - name: accountId
-        in: path
-        description: ID of account to return
-        required: true
-        type: integer
-      - name: Authorization
-        in: header
-        required: false
-        default: Bearer {token}
-        type: string
+        - name: accountId
+          in: path
+          description: ID of account to return
+          required: true
+          type: integer
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
       responses:
         200:
           description: 'successful operation'
-          schema: 
-             $ref: '#/definitions/AccountResponse'
+          schema:
+            $ref: '#/definitions/AccountResponse'
           headers: {}
         404:
           description: 'not found'
           schema:
             $ref: '#/definitions/NotFoundResponse'
-        
+
         500:
           description: 'internal server error'
           schema:
@@ -92,23 +87,23 @@ paths:
     post:
       summary: Create Transaction
       tags:
-      - Transactions
+        - Transactions
       operationId: CreateTransaction
       deprecated: false
       produces:
-      - application/json
+        - application/json
       parameters:
-      - name: Authorization
-        in: header
-        required: false
-        default: Bearer {token}
-        type: string
-      - name: Body
-        in: body
-        required: true
-        description: ''
-        schema:
-          $ref: '#/definitions/CreateTransactionRequest'
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/CreateTransactionRequest'
       responses:
         201:
           description: 'successful operation'
@@ -123,33 +118,33 @@ paths:
           description: 'account not found'
           schema:
             $ref: '#/definitions/NotFoundResponse'
-        
+
         500:
           description: 'internal server error'
           schema:
             $ref: '#/definitions/InternalServerErrorResponse'
-          
-        
+
+
   /transactions/{transactionId}:
     get:
       summary: Recover Transaction
       tags:
-      - Transactions
+        - Transactions
       operationId: RecoverTransaction
       deprecated: false
       produces:
-      - application/json
+        - application/json
       parameters:
-      - name: transactionId
-        in: path
-        description: ID of transaction to return
-        required: true
-        type: integer
-      - name: Authorization
-        in: header
-        required: false
-        default: Bearer {token}
-        type: string
+        - name: transactionId
+          in: path
+          description: ID of transaction to return
+          required: true
+          type: integer
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
       responses:
         200:
           description: 'successful operation'
@@ -164,7 +159,7 @@ paths:
           description: 'transaction not found'
           schema:
             $ref: '#/definitions/NotFoundResponse'
-        
+
         500:
           description: 'internal server error'
           schema:
@@ -179,7 +174,7 @@ definitions:
       document_number:
         type: string
     required:
-    - document_number
+      - document_number
   CreateTransactionRequest:
     title: CreateTransactionRequest
     example:
@@ -198,12 +193,12 @@ definitions:
         type: number
         format: double
     required:
-    - account_id
-    - operation_type_id
-    - amount
+      - account_id
+      - operation_type_id
+      - amount
   AccountResponse:
     title: AccountResponse
-    example: 
+    example:
       account_id: 1
       document_number: "1234568989"
     type: object
@@ -220,7 +215,7 @@ definitions:
       account_id: 1
       operation_type_id: 1
       amount: 126.85
-      event_date: "2020-11-20T16:45:59.396274Z"
+      event_date: "020-11-20T16:45:59.396274Z"
     type: object
     properties:
       id:
@@ -236,7 +231,7 @@ definitions:
         type: string
   InternalServerErrorResponse:
     title: InternalServerErrorResponse
-    example: 
+    example:
       status_code: 500
       message: "internal server error"
     type: object
@@ -247,8 +242,8 @@ definitions:
       message:
         type: string
   NotFoundResponse:
-    title: InternalServerErrorResponse
-    example: 
+    title: NotFoundResponse
+    example:
       status_code: 404
       message: "not found"
     type: object
@@ -259,8 +254,8 @@ definitions:
       message:
         type: string
   BadRequestResponse:
-    title: InternalServerErrorResponse
-    example: 
+    title: BadRequestResponse
+    example:
       status_code: 400
       message: "bad request"
     type: object
@@ -271,8 +266,8 @@ definitions:
       message:
         type: string
   ConflictResponse:
-    title: InternalServerErrorResponse
-    example: 
+    title: ConflictResponse
+    example:
       status_code: 409
       message: "conflict"
     type: object
@@ -282,10 +277,10 @@ definitions:
         format: int32
       message:
         type: string
-  
-  
+
+
 tags:
-- name: Accounts
-  description: ''
-- name: Transactions
-  description: ''
+  - name: Accounts
+    description: ''
+  - name: Transactions
+    description: ''
