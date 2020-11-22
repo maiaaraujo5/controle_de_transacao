@@ -8,7 +8,8 @@ build:
 
 test:
 	go test ./internal...
-integration_tests:
+
+integration_tests: docker-compose-run-dependencies-test
 	go test -tags=integration ./it/...
 
 run: build
@@ -19,15 +20,23 @@ docker-build: build
 	docker build -t $(DOCKER_REPOSITORY)/$(APP_NAME_TAG) .
 	rm -rf Dockerfile
 
-docker-run: docker-build
+docker-run: docker-rm-postgres-container docker-build
 	docker run --net=host $(DOCKER_REPOSITORY)/$(APP_NAME_TAG)
 
-docker-compose-run-dependencies:
-	cp ./build/docker/docker-compose.yaml .
+docker-compose-run-dependencies: docker-rm-postgres-container
+	cp ./build/docker/development/docker-compose.yaml .
 	cp ./build/docker/init.sql .
 	docker-compose up -d
 	rm -rf init.sql
 	rm -rf docker-compose.yaml
 
-docker-run-with-providers-dependencies: docker-build docker-compose-run-dependencies docker-run
+docker-compose-run-dependencies-test: docker-rm-postgres-container
+	cp ./build/docker/test/docker-compose.yaml .
+	docker-compose up -d
+	rm -rf docker-compose.yaml
 
+docker-run-with-providers-dependencies: docker-rm-postgres-container docker-build docker-compose-run-dependencies docker-run
+
+docker-rm-postgres-container:
+	-docker rm pismo-postgres --force
+	-docker rm pismo-postgres-test --force

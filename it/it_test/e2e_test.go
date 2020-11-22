@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -28,11 +29,16 @@ func (s *e2eTestSuite) SetupSuite() {
 	options := &pg.Options{
 		User:     "postgres",
 		Password: "docker",
-		Database: "pismo",
+		Database: "pismo-teste",
 		Addr:     "localhost:5432",
 		PoolSize: 5,
 	}
 	s.dbConn = pg.Connect(options)
+
+	err := os.Setenv("environment", "test")
+	s.NoError(err)
+
+	time.Sleep(1 * time.Second) //Tempo para esperar a imagem docker do banco subir
 
 	go runner.RunApplication()
 }
