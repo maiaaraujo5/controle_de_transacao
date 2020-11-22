@@ -8,12 +8,14 @@ build:
 
 test:
 	go test ./internal...
+integration_tests:
+	go test -tags=integration ./it/...
 
 run: build
 	go run cmd/main.go
 
 docker-build: build
-	cp ./deployments/docker/Dockerfile .
+	cp ./build/docker/Dockerfile .
 	docker build -t $(DOCKER_REPOSITORY)/$(APP_NAME_TAG) .
 	rm -rf Dockerfile
 
@@ -21,8 +23,8 @@ docker-run: docker-build
 	docker run --net=host $(DOCKER_REPOSITORY)/$(APP_NAME_TAG)
 
 docker-compose-run-dependencies:
-	cp ./deployments/docker/docker-compose.yaml .
-	cp ./deployments/docker/init.sql .
+	cp ./build/docker/docker-compose.yaml .
+	cp ./build/docker/init.sql .
 	docker-compose up -d
 	rm -rf init.sql
 	rm -rf docker-compose.yaml
