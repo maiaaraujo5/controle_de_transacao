@@ -81,7 +81,7 @@ curl --location --request GET 'localhost:8080/transactions/1' \
 
 ## *Comandos makefile*
 
-####  make build
+####  make build-go
 * Este comando é responsável por realizar o build da aplicação.
 ####  make test
 * Este comando é responsável por rodar todos os testes unitários da aplicação.
