@@ -18,7 +18,7 @@ func (t *Transaction) FromModelDomain(transaction *model.Transaction) *Transacti
 	t.AccountID = transaction.AccountID
 	t.Amount = transaction.Amount
 	t.OperationTypeID = transaction.OperationTypeID
-	t.EventDate = time.Now()
+	t.EventDate = transaction.EventDate
 	return t
 }
 

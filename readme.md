@@ -36,6 +36,46 @@ A maioria dos endpoints presentes na aplicação necessitam de autenticação. S
 
 * Caso tenha problemas com essa chave de autorização, é possível gerar uma nova com a assinatura **key-segura** neste: [site](https://jwt.io/)
 
+#### Exemplos de requests Curl
+* Criar uma conta
+```
+curl --location --request POST 'localhost:8080/accounts' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODgzNGYyNy1jNGJhLTQwZmUtODNhYy1mZTUwZDFjYjE5OWQiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.r8mJQ-98UskHyMSJ9EGakNI_BEGEka_ZjjZt1bN3h9M' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"document_number": "12345689895"
+}'
+```
+
+* Recuperar uma conta
+
+```
+curl --location --request GET 'localhost:8080/accounts/1' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.xfts1LNO-o8YTY9SmuoyakqTBtuCOTYNF7sDrkH_9-g' \
+--data-raw ''
+```
+
+* Criar uma transação
+
+```
+curl --location --request POST 'localhost:8080/transactions' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.xfts1LNO-o8YTY9SmuoyakqTBtuCOTYNF7sDrkH_9-g' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"account_id": 1,
+	"operation_type_id": 4,
+	"amount": 126.857
+}'
+```
+
+* Recuperar uma transação
+
+```
+curl --location --request GET 'localhost:8080/transactions/1' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.xfts1LNO-o8YTY9SmuoyakqTBtuCOTYNF7sDrkH_9-g' \
+--data-raw ''
+```
+
 ## *Comandos makefile*
 
 ####  make build

@@ -3,7 +3,8 @@ DOCKER_TAG=latest
 APP_NAME_TAG=control-transaction:$(DOCKER_TAG)
 
 
-build:
+build-go:
+	go mod vendor
 	go build -mod vendor -o ./dist/main cmd/main.go
 
 test:
@@ -12,10 +13,10 @@ test:
 integration_tests: docker-compose-run-dependencies-test
 	go test -tags=integration ./it/...
 
-run: build
+run: build-go
 	go run cmd/main.go
 
-docker-build: build
+docker-build: build-go
 	cp ./build/docker/Dockerfile .
 	docker build -t $(DOCKER_REPOSITORY)/$(APP_NAME_TAG) .
 	rm -rf Dockerfile

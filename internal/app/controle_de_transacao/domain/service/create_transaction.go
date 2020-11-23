@@ -9,6 +9,7 @@ import (
 	"github.com/maiaaraujo5/controle_de_transacao/internal/app/controle_de_transacao/errors"
 	"math"
 	"strconv"
+	"time"
 )
 
 type CreateTransaction interface {
@@ -41,7 +42,7 @@ func (c createTransaction) Execute(parentContext context.Context, transaction *m
 	if transaction.OperationTypeID != operations_types.PAYMENT {
 		transaction.Amount = math.Copysign(transaction.Amount, -1)
 	}
-
+	transaction.EventDate = time.Now()
 	t, err := c.transactionRepository.Save(parentContext, transaction)
 	if err != nil {
 		return nil, err
